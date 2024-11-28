@@ -65,7 +65,7 @@ $$
 
 Portanto, a complexidade ciclomática do código é **3**.
 
-## 5. Identificação dos Caminhos e Sequências
+## Identificação dos Caminhos e Sequências
 
 Com a complexidade ciclomática sendo 3, significa que o código possui 3 caminhos independentes. Vamos identificar e descrever esses caminhos:
 
