@@ -34,5 +34,5 @@ if(rs.next()){
 result = true;
 nome = rs.getString("nome");}
 }cacth (Exception e) { }
-return result; }
+return result; }
 }
