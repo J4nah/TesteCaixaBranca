@@ -6,72 +6,74 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
- * A classe User é responsável pela conexão com o banco de dados e pela verificação de usuários.
- * Ela possui métodos que permitem conectar ao banco de dados e validar as credenciais de login.
+ * A classe User gerencia a autenticação de um usuário no sistema.
+ * Ela contém métodos para conectar ao banco de dados e verificar as credenciais do usuário.
  */
 public class User {
-
+    
     /**
      * Estabelece uma conexão com o banco de dados MySQL.
      * 
-     * @return Uma conexão com o banco de dados.
+     * @return Uma conexão com o banco de dados ou null caso ocorra um erro na conexão.
      */
     public Connection conectarBD() {
         Connection conn = null;
         try {
-            // Carrega o driver MySQL para o Java
+            // Carrega o driver JDBC do MySQL
             Class.forName("com.mysql.Driver.Manager").newInstance();
-            // URL de conexão com o banco de dados
+            
+            // String de conexão com o banco de dados
             String url = "jdbc:mysql://127.0.0.1/test?user=lopes&password=123";
             conn = DriverManager.getConnection(url);
         } catch (Exception e) {
-            // Caso ocorra algum erro ao conectar, o código não lança exceção
-            // O erro pode ser tratado ou registrado, dependendo da aplicação
+            // Se ocorrer um erro, a conexão será retornada como null
+            e.printStackTrace();
         }
-        return conn; // Retorna a conexão
+        return conn;
     }
 
     /**
-     * Armazena o nome do usuário após a verificação no banco de dados.
-     * O valor é atualizado se o login e a senha informados forem válidos.
+     * Atributo que armazena o nome do usuário recuperado do banco de dados.
      */
     public String nome = "";
-
+    
     /**
-     * Variável que armazena o resultado da verificação do usuário.
-     * Se verdadeiro, o login e senha são válidos.
+     * Resultado da verificação do usuário. Verdadeiro se as credenciais forem válidas, falso caso contrário.
      */
     public boolean result = false;
 
     /**
-     * Verifica se o login e a senha informados existem no banco de dados.
+     * Verifica as credenciais de login e senha fornecidas.
      * 
      * @param login O nome de usuário a ser verificado.
-     * @param senha A senha a ser verificada.
-     * @return Retorna true se o usuário foi encontrado no banco de dados e a senha for válida, caso contrário, retorna false.
+     * @param senha A senha associada ao usuário a ser verificada.
+     * @return Retorna verdadeiro se o usuário for encontrado com as credenciais válidas, caso contrário retorna falso.
      */
     public boolean verificarUsuario(String login, String senha) {
-        String sql = ""; // Comando SQL a ser executado no banco de dados
-        Connection conn = conectarBD(); // Estabelece a conexão com o banco de dados
-
-        // Instrução SQL para verificar o login e a senha
+        String sql = "";
+        Connection conn = conectarBD();
+        
+        // Monta a instrução SQL para verificar o usuário e senha no banco de dados
         sql += "select nome from usuarios ";
-        sql += "where login = '" + login + "'"; // Adiciona o login à consulta
-        sql += " and senha = '" + senha + "';"; // Adiciona a senha à consulta
+        sql += "where login = '" + login + "'";  // Evitar SQL Injection (melhor usar PreparedStatement)
+        sql += " and senha = '" + senha + "';";
 
         try {
-            // Executa a consulta no banco de dados
+            // Cria uma declaração para executar a consulta SQL
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            
-            // Se o usuário for encontrado, o nome é atribuído e o resultado é verdadeiro
+
+            // Verifica se existe algum resultado
             if (rs.next()) {
                 result = true;
                 nome = rs.getString("nome");
             }
         } catch (Exception e) {
-            // Em caso de erro, não faz nada (poderia logar ou lançar exceção)
+            // Caso ocorra algum erro durante a execução da consulta
+            e.printStackTrace();
         }
-        return result; // Retorna o resultado da verificação
+        
+        // Retorna o resultado da verificação
+        return result;
     }
 }
