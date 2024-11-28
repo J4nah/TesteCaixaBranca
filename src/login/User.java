@@ -33,6 +33,6 @@ ResultSet rs = st.executeQuery(sql);
 if(rs.next()){
 result = true;
 nome = rs.getString("nome");}
-}cacth (Exception e) { }
+}catch (Exception e) { }
 return result; }
 }
