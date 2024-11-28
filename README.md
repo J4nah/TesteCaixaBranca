@@ -8,3 +8,6 @@
 <b> - Atributos de classe mal definidos: </b> <code>public String nome = "";</code> deve ser <code>private</code> ou protegido com <code>getters</code> e <code>setters</code>.<br>
 <code>public boolean result = false;</code> também deveria ser privado.<br>
 <b> - Erros de organização:</b> Faltam comentários explicativos e JavaDocs para os métodos e atributos.
+
+
+<img src="grafo de Fluxo.jpg" alt="Grafo de fluxo">
