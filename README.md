@@ -35,7 +35,7 @@ Agora, vamos identificar como os pontos se conectam (arestas):
 Agora, com base nos pontos e conexões, o grafo de fluxo seria representado assim:
 
 
-<img src="grafo.jpg" alt="Grafo de fluxo" style="max-width: 100%; height: auto;">
+<img src="grafo (1).jpg" alt="Grafo de fluxo" style="max-width: 100%; height: auto;">
 
 ## Cálculo da Complexidade Ciclomática
 
